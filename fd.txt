@@ -1,0 +1,98 @@
+graph TD
+    A[Start Node] --> B[Initialize Node]
+    B --> C{Join Network?}
+    
+    C -->|Yes| D[Contact Known Node]
+    C -->|No| E[Create New Network]
+    
+    D --> F[Find Successor]
+    F --> G[Initialize Finger Table]
+    G --> H[Start Background Processes]
+    
+    E --> H
+    
+    H --> I[Server Thread]
+    H --> J[Stabilization Thread]
+    H --> K[Finger Fix Thread]
+    H --> L[Menu Interface]
+    
+    I --> M[Handle Requests]
+    M --> N[Store Key]
+    M --> O[Retrieve Key]
+    M --> P[Delete Key]
+    M --> Q[Network Maintenance]
+    
+    J --> R[Check Successor]
+    R --> S[Update Successor List]
+    R --> T[Handle Failures]
+    
+    K --> U[Update Finger Table]
+    U --> V[Maintain Routing]
+    
+    L --> W[User Commands]
+    W --> N
+    W --> O
+    W --> P
+
+
+
+
+
+
+
+    graph TD
+    A[Key Operations] --> B{Operation Type}
+    
+    B -->|Store| C[Hash Key]
+    B -->|Retrieve| D[Hash Key]
+    B -->|Delete| E[Hash Key]
+    
+    C --> F{Responsible Node?}
+    D --> F
+    E --> F
+    
+    F -->|Yes| G[Local Operation]
+    F -->|No| H[Forward to Successor]
+    
+    G --> I[Database Operation]
+    I --> J[Replicate Data]
+    
+    H --> K[Remote Operation]
+    K --> L[Handle Response]
+
+
+
+
+    graph TD
+    A[Node Failure Handling] --> B[Detect Failure]
+    
+    B --> C{Successor Failed?}
+    
+    C -->|Yes| D[Find New Successor]
+    C -->|No| E[Update Lists]
+    
+    D --> F[Update Successor List]
+    F --> G[Repair Replicas]
+    
+    G --> H[Transfer Keys]
+    H --> I[Update Routing]
+    
+    E --> J[Normal Operation]
+
+
+
+    graph TD
+    A[Data Replication] --> B[Store Key]
+    
+    B --> C[Store Locally]
+    C --> D[Get Successor List]
+    
+    D --> E[Replicate to r-1 Successors]
+    
+    E --> F{Successful?}
+    
+    F -->|Yes| G[Update Complete]
+    F -->|No| H[Retry Operation]
+    
+    H --> I[Backoff Timer]
+    I --> E
