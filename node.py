@@ -5,15 +5,16 @@ import hashlib
 import json
 import time
 import sqlite3  # Add this import
+import os
 
 # Utility: Hash function
-def hash_function(key, m=160):
+def hash_function(key, m=10):
     """Hashes the key to an m-bit identifier."""
     return int(hashlib.sha1(key.encode()).hexdigest(), 16) % (2 ** m)
 
 # Chord Node Class
 class Node:
-    def __init__(self, ip, port, m=160, replication_factor=3):
+    def __init__(self, ip, port, m=10, replication_factor=3):
         self.ip = ip
         self.port = port
         self.node_id = hash_function(f"{ip}:{port}")
@@ -644,7 +645,7 @@ class Node:
 
                 elif choice == "6":
                     print("Exiting...")
-                    break
+                    os._exit(0)
 
                 else:
                     print("Invalid choice. Please try again.")
